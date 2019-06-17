@@ -3,7 +3,7 @@
 EDGES=$1
 TX_DATA_FILE=roadNet-TX.txt
 C_DATA_FILE=src/main/c/data.h
-RESOURCES_DIR=src/main/resources
+RESOURCES_DIR=tmp
 mkdir -p $RESOURCES_DIR
 
 echo Data generation with $EDGES edges
