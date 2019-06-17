@@ -16,7 +16,7 @@ void graph_free(Graph this){
 size_t calc_offset(Graph graph, i32 x, i32 y){
   return x + graph->edges_size * y;
 }
-
+#include <stdio.h>
 void graph_add_edge(Graph graph, i32 from, i32 to, i32 weight){
   graph->edges[calc_offset(graph, from, to)] = weight;
   graph->edges[calc_offset(graph, to, from)] = weight;
