@@ -1,11 +1,13 @@
 CC=clang
 EDGES=20000
+TIME=/usr/bin/time -a --output time.txt -f "%C\nMax MEM %Mkb - %E %es"
 
 default: clean target/graph target/graph.jar target/graph.wasm
 
 clean:
 	rm -rf target/*
 	rm -f src/main/c/data.h
+	rm -f time.txt
 
 target/graph: src/main/c/data.h
 	mkdir -p target
@@ -30,12 +32,12 @@ tmp/roadNet-TX.txt:
 	bash scripts/gen-data.sh $(EDGES)
 
 run-c: target/graph
-	time target/graph
+	$(TIME) target/graph
 
 run-wasm: target/graph.wasm
-	time wasmer run --em-entrypoint=main target/graph.wasm
+	$(TIME) wasmer run --backend llvm --em-entrypoint=main target/graph.wasm
 
 run-java: target/graph.jar
-	time java -jar target/graph.jar $(EDGES) 5
+	$(TIME) java -Xmx4G -Xms1G -jar target/graph.jar $(EDGES) 4
 
 run-all: run-c run-java run-wasm

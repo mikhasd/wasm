@@ -2,7 +2,9 @@ public class Main {
     public static void main(String... args) {
         int edges = Integer.parseInt(args[0]);
         int iterations = args.length > 1 ? Integer.parseInt(args[1]) : 1;
+
         int[] edges_data = DataLoader.load(edges);
+
         for (int i = 0; i < iterations; i++)
             iterateTest(edges, edges_data);
     }
@@ -10,7 +12,7 @@ public class Main {
     private static void iterateTest(int edges, int[] edges_data) {
         long start = System.currentTimeMillis();
         Graph graph = new Graph(edges);
-        for (int i = 0; i < edges; i += 2) {
+        for (int i = 0; i < edges * 2; i += 2) {
             int from = edges_data[i];
             int to = edges_data[i + 1];
             graph.addEdge(from, to, 1);

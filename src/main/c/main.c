@@ -9,11 +9,12 @@ void calculate_path(Graph graph, i32 from, i32 to){
 
 int main(int argc, char **argv){
   Graph graph = graph_new(EDGES_COUNT);
-  for(i32 i = 0; i < EDGES_COUNT; i += 2){
+  for(i32 i = 0; i < EDGES_COUNT * 2; i += 2){
     i32 from = edges_data[i];
     i32 to = edges_data[i+1];    
     graph_add_edge(graph, from, to, 1);
   }
+  
   calculate_path(graph, 0, 6);
   calculate_path(graph, 4, 7);
   calculate_path(graph, 7, 0);

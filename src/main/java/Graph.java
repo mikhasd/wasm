@@ -34,12 +34,7 @@ public class Graph {
         return neighbors;
     }
 
-    private class CostTable {
-        int[] costs;
-        int[] source;
-    };
-
-    private CostTable calculateCostTable(Graph this, int from){
+    private int[] calculateCostTable(Graph this, int from){
         int[] costs = new int[this.edgesSize];
         int[] source = new int[this.edgesSize];
         for(int i = 0; i < this.edgesSize; i++){
@@ -70,26 +65,21 @@ public class Graph {
                 }
             }
         }
-
-
-
-        CostTable table = new CostTable();
-        table.costs = costs;
-        table.source = source;
-        return table;
+        
+        return source;
     }
 
     public List calculateShortestPath(int from, int to){
         List path = new List(10);
         path.add(to);
 
-        CostTable table = calculateCostTable(from);
+        int[] source = calculateCostTable(from);
 
-        int previous = table.source[to];
+        int previous = source[to];
 
         while(previous != -1 && previous != from){
             path.add(previous);
-            previous = table.source[previous];
+            previous = source[previous];
         }
 
         if(previous == -1){

@@ -16,7 +16,7 @@ void graph_free(Graph this){
 size_t calc_offset(Graph graph, i32 x, i32 y){
   return x + graph->edges_size * y;
 }
-#include <stdio.h>
+
 void graph_add_edge(Graph graph, i32 from, i32 to, i32 weight){
   graph->edges[calc_offset(graph, from, to)] = weight;
   graph->edges[calc_offset(graph, to, from)] = weight;
@@ -39,12 +39,7 @@ List get_neighbors(Graph this, i32 vertex){
   return neighbors;
 }
 
-struct cost_table {
-  i32* costs;
-  i32* source;
-};
-
-struct cost_table  calculate_cost_table(Graph this, i32 from){
+i32* calculate_cost_table(Graph this, i32 from){
   i32* costs = malloc(this->edges_size * sizeof(i32));
   i32* source = calloc(this->edges_size, sizeof(i32));
   for(i32 i = 0; i < this->edges_size;i++){
@@ -79,27 +74,25 @@ struct cost_table  calculate_cost_table(Graph this, i32 from){
 
   priority_queue_free(queue);
 
-  struct cost_table table;
-  table.costs = costs;
-  table.source = source;
-  return table;
+  free(costs);
+
+  return source;
 }
 
 List graph_shortest_path(Graph this, i32 from, i32 to){
   List path = list_new(10);
   list_add(path, to);
 
-  struct cost_table table = calculate_cost_table(this, from);
+  i32* sources = calculate_cost_table(this, from);
 
-  i32 previous = table.source[to];
+  i32 previous = sources[to];
 
   while(previous != -1 && previous != from){
     list_add(path, previous);
-    previous = table.source[previous];
+    previous = sources[previous];
   }
 
-  free(table.costs);
-  free(table.source);
+  free(sources);
 
   if(previous == -1){
     return list_new(0);
