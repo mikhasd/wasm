@@ -8,7 +8,7 @@ public class Main {
         for (int i = 0; i < edges * 2; i += 2) {
             int from = edges_data[i];
             int to = edges_data[i + 1];
-            graph.addEdge(from, to, 1);
+            graph.addEdge(from, to, (byte)1);
         }
         long loaded = System.currentTimeMillis();
 

@@ -1,6 +1,7 @@
 CC=clang
 EDGES=20000
 TIME=/usr/bin/time -a --output target/time.txt -f "%C\nMax MEM %Mkb - %E %es\n"
+WASI_SDK=/home/mikhas/develop/wasi-sdk
 
 default: clean target/graph target/graph.jar target/graph.wasm
 
@@ -20,7 +21,7 @@ make-java: tmp/roadNet-TX.txt
 	jar cfe target/graph.jar Main -C target/classes .
 
 make-wasm: src/main/c/data.h
-	~/dev/wasi-sdk-5.0/opt/wasi-sdk/bin/clang src/main/c/*.c -o target/graph.wasm -O3 --sysroot ~/dev/wasi-sdk-5.0/opt/wasi-sdk/share/sysroot
+	$(WASI_SDK)/bin/clang src/main/c/*.c -o target/graph.wasm -O3 --sysroot $(WASI_SDK)/share/sysroot
 
 src/main/c/data.h:
 	bash scripts/gen-data.sh $(EDGES)
