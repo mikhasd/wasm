@@ -4,7 +4,7 @@ public class Main {
         System.out.println("iteration:\t" + iteration);
 
         long start = System.currentTimeMillis();
-        Graph graph = new Graph(edges);
+        Graph graph = new Graph(edges+1);
         for (int i = 0; i < edges * 2; i += 2) {
             int from = edges_data[i];
             int to = edges_data[i + 1];
@@ -12,18 +12,19 @@ public class Main {
         }
         long loaded = System.currentTimeMillis();
 
-        graph.calculateShortestPath(0, 6);
-        graph.calculateShortestPath(4, 7);
-        graph.calculateShortestPath(7, 0);
-        graph.calculateShortestPath(16232, 15536);
-        graph.calculateShortestPath(15047, 15389);
-        graph.calculateShortestPath(15047, 17972);
-        graph.calculateShortestPath(10631, 10630);
-        graph.calculateShortestPath(956, 1092);
-        graph.calculateShortestPath(10631, 10630);
-        graph.calculateShortestPath(797, 816);
-        graph.calculateShortestPath(29, 1175);
-
+        for(int i = 0; i < 10; i++){
+            graph.calculateShortestPath(0, 6);
+            graph.calculateShortestPath(4, 7);
+            graph.calculateShortestPath(7, 0);
+            graph.calculateShortestPath(10631, 10630);
+            graph.calculateShortestPath(956, 1092);
+            graph.calculateShortestPath(10631, 10630);
+            graph.calculateShortestPath(797, 816);
+            graph.calculateShortestPath(29, 1175);
+            graph.calculateShortestPath(29, 1175);
+            graph.calculateShortestPath(232, 6055);
+            graph.calculateShortestPath(32, 6007);
+        }
         long end = System.currentTimeMillis();
 
         long timeToLoad = loaded - start;
@@ -45,7 +46,14 @@ public class Main {
 
         int[] edges_data = DataLoader.load(edges);
 
+        int max = edges_data[0];
+        for(int i = 1; i < edges_data.length; i++){
+            int current = edges_data[i];
+            if(current > max)
+                max = current;
+        }
+
         for (int i = 0; i < iterations; i++)
-            iterateTest(edges, edges_data, i);
+            iterateTest(max, edges_data, i);
     }
 }

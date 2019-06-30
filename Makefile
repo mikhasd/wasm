@@ -33,9 +33,9 @@ run-c: make-c
 	$(TIME) target/graph 1
 
 run-wasm: make-wasm
-	$(TIME) wasmer run --backend=llvm --em-entrypoint=main target/graph.wasm 5
+	$(TIME) wasmer run --backend=llvm --em-entrypoint=main target/graph.wasm 2
 
 run-java: make-java
-	$(TIME) java -Xmx4G -Xms1G -jar target/graph.jar $(EDGES) 5
+	$(TIME) java -Xmx256M -Xms256M -jar target/graph.jar $(EDGES) 3
 
 run-all: run-c run-java run-wasm
