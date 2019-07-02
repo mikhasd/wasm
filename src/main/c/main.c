@@ -64,6 +64,12 @@ i32 parseInt(char* argt){
   return i; 
 }
 
+i64 parseLong(char* argt){
+  i64 i;
+  sscanf(argt, "%ld", &i);
+  return i; 
+}
+
 i32 biggestVertex(){
   i32 max = edges_data[0];
   for(i32 i = 1; i < EDGES_COUNT * 2; i++){
@@ -75,10 +81,14 @@ i32 biggestVertex(){
 }
 
 int main(int argc, char **argv){  
-  if(argc < 2)
+  if(argc < 3)
     return 1;
 
-  i32 iterations = parseInt(argv[1]);
+  i64 startup = parseLong(argv[1]);
+
+  printf("Started in %ldms\n", now() - startup);
+
+  i32 iterations = parseInt(argv[2]);
   i32 biggest = biggestVertex();
 
   for(i32 i = 0; i < iterations; i++)

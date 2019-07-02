@@ -30,12 +30,12 @@ tmp/roadNet-TX.txt:
 	bash scripts/gen-data.sh $(EDGES)
 
 run-c: make-c
-	$(TIME) target/graph 1
+	$(TIME) target/graph $$(($$(date +%s%N)/1000000)) 1
 
 run-wasm: make-wasm
-	$(TIME) wasmer run --backend=llvm --em-entrypoint=main target/graph.wasm 2
+	$(TIME) wasmer run --backend=cranelift --em-entrypoint=main target/graph.wasm $$(($$(date +%s%N)/1000000)) 2
 
 run-java: make-java
-	$(TIME) java -Xmx256M -Xms256M -jar target/graph.jar $(EDGES) 3
+	$(TIME) java -Xmx256M -Xms256M -jar target/graph.jar $$(($$(date +%s%N)/1000000)) $(EDGES) 3
 
 run-all: run-c run-java run-wasm

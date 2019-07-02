@@ -37,12 +37,15 @@ public class Main {
     }
 
     public static void main(String... args) {
-        if(args.length < 1){
+        if(args.length < 2){
             System.exit(1);
         }
 
-        int edges = Integer.parseInt(args[0]);
-        int iterations = args.length > 1 ? Integer.parseInt(args[1]) : 1;
+	long startup = Long.parseLong(args[0]);
+	System.out.println(String.format("Started in %dms", System.currentTimeMillis() - startup));
+
+        int edges = Integer.parseInt(args[1]);
+        int iterations = args.length > 1 ? Integer.parseInt(args[2]) : 1;
 
         int[] edges_data = DataLoader.load(edges);
 
